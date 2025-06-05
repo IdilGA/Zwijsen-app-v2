@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Header from '~/components/Header.vue';
 import Button from '~/components/Button.vue';
 
@@ -8,7 +8,17 @@ const scaningState = ref('idle');
 const progress = ref(0);
 const video = ref(null);
 const isBusy = ref(false);
+const scans = ref<string[]>([]);
 let mediaStream = null;
+
+const fetchScans = async () => {
+    try {
+        const { urls } = await $fetch('/api/listPhotos')
+        scans.value = urls
+    } catch (err) {
+        console.error('Failed to load scans', err)
+    }
+}
 
 onMounted(async () => {
     try {
@@ -16,6 +26,7 @@ onMounted(async () => {
         if (video.value) {
             video.value.srcObject = mediaStream;
         }
+        await fetchScans()
     } catch (err) {
         console.error('Could not access camera:', err);
         state.value = 'error';
@@ -55,6 +66,7 @@ const startScan = async () => {
 
         scaningState.value = 'success';
         state.value = 'scan-successful';
+        await fetchScans()
     } catch (err) {
         console.error('Error during scan process:', err);
         scaningState.value = 'error';
@@ -103,6 +115,11 @@ state.value = 'scanning'
             </div>
         </div>
 
+        <div class="photo-grid" v-if="scans.length">
+            <img v-for="url in scans" :key="url" :src="url" alt="scan" />
+        </div>
+        <p v-else>No scans found.</p>
+
     </div>
     <div v-else-if="state == 'scan-successful'">
         <p>Scan scan successful page</p>
@@ -145,5 +162,17 @@ state.value = 'scanning'
     /* A distinct purple bar */
     width: 0%;
     transition: width 0.2s ease;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.photo-grid img {
+    width: 100%;
+    border-radius: 8px;
 }
 </style>
