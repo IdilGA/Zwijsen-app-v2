@@ -19,8 +19,7 @@ Create a `.env` file in the root of the project and add the following:
 
 ```env
 AZURE_ENDPOINT=your_azure_endpoint
-AZURE_KEY=your_azure_key
-AZURE_CONNECTION_STRING=your_connection_string
+AZURE_STORAGE_CONTAINER_NAME=your_azure_container_name
 ```
 
 ---
