@@ -1,75 +1,69 @@
-# Nuxt Minimal Starter
+# Zwijsen Nakijk App
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+The **Zwijsen Nakijk App** is a Nuxt-based web application that allows teachers to scan student tests, which are then processed using OCR/HTR technology. The results are displayed in a dashboard where teachers can confirm the scores and generate personalized feedback for students.
 
-## Setup
+This project helps educators using Zwijsen test materials by reducing the time spent on grading.
 
-Make sure to install dependencies:
+---
 
+## ⚙️ Installation
+
+Make sure you have [Node.js](https://nodejs.org/) version **20.x or newer** and [pnpm](https://pnpm.io/) installed.
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+### 🔐 Environment Variables
 
-Start the development server on `http://localhost:3000`:
+Create a `.env` file in the root of the project and add the following:
 
+```env
+AZURE_ENDPOINT=your_azure_endpoint
+AZURE_KEY=your_azure_key
+AZURE_CONNECTION_STRING=your_connection_string
+```
+
+---
+
+## 🚀 Development
+
+To start the development server:
 ```bash
-# npm
-npm run dev
-
-# pnpm
 pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+The app will be available at: [http://localhost:3000](http://localhost:3000)
 
-Build the application for production:
+---
 
+## 📦 Build for Production
+
+To generate a production build:
 ```bash
-# npm
-npm run build
-
-# pnpm
 pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+> Further deployment instructions will be added later.
 
-```bash
-# npm
-npm run preview
+---
 
-# pnpm
-pnpm preview
+## 🛠️ Technologies Used
 
-# yarn
-yarn preview
+* [Nuxt 3](https://nuxt.com/)
+* [pnpm](https://pnpm.io/)
+* [`sass-embedded`](https://www.npmjs.com/package/sass-embedded) for SCSS support
+* [`@azure/storage-blob`](https://www.npmjs.com/package/@azure/storage-blob) for Azure Blob Storage integration
 
-# bun
-bun run preview
-```
+---
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## 🤝 Contributing
+
+This is a team project. Contributions are welcome!
+* Please keep your code clean and readable.
+* Open an issue if you encounter a bug or have a suggestion.
+
+---
+
+## 📬 Contact
+
+If you have questions, feel free to open an issue on this repository.
