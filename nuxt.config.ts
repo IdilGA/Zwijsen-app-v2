@@ -5,4 +5,10 @@ export default defineNuxtConfig({
   css: [
     '~/assets/scss/main.scss'
   ],
+  runtimeConfig: {
+    azureStorageConnectionString: process.env.AZURE_STORAGE_CONNECTION_STRING,
+    public: {
+      azureStorageContainerName: process.env.AZURE_STORAGE_CONTAINER_NAME,
+    }
+  }
 })
