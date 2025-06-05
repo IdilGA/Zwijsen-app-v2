@@ -41,45 +41,23 @@ const startScan = async () => {
     progress.value = 0;
 
     try {
-        const formData = new FormData();
-        formData.append('file', imageBlob, 'scan.png');
-
-        // Use fetch with progress events via XMLHttpRequest for tracking
-        await new Promise((resolve, reject) => {
-            // TODO: Add Azure upload link
-            return resolve()
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/upload');
-
-            xhr.upload.onprogress = (event) => {
-                if (event.lengthComputable) {
-                    progress.value = Math.round((event.loaded / event.total) * 100);
-                }
-            };
-
-            xhr.onload = () => {
-                if (xhr.status === 200) {
-                    resolve(xhr.response);
-                } else {
-                    reject(new Error(`Upload failed with status ${xhr.status}`));
-                }
-            };
-
-            xhr.onerror = () => reject(new Error('Network error during upload'));
-            xhr.send(formData);
+        const response = await fetch('/api/uploadToAzure', {
+            method: 'POST',
+            body: formData
         });
+        if (!response.ok) throw new Error('Upload failed');
+        const { url } = await response.json();
 
         scaningState.value = 'processing';
         progress.value = 0;
 
-        // TODO: Poll or wait for processing to complete
         await simulateProcessing();
 
         scaningState.value = 'success';
-        state.value = 'scan-successful'
+        state.value = 'scan-successful';
     } catch (err) {
         console.error('Error during scan process:', err);
-        scaningState.value = 'error'
+        scaningState.value = 'error';
         state.value = 'error';
     } finally {
         isBusy.value = false;
