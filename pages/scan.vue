@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Header from '~/components/Header.vue';
 import Button from '~/components/Button.vue';
 
@@ -33,8 +33,14 @@ const startScan = async () => {
     canvas.width = video.value.videoWidth;
     canvas.height = video.value.videoHeight;
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(video.value, 0, 0);
-    const imageBlob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+    ctx?.drawImage(video.value, 0, 0);
+    const imageBlob = await new Promise<Blob>((resolve) => {
+        canvas.toBlob((b) => resolve(b as Blob), 'image/png');
+    });
+
+    // Prepare FormData with the captured image
+    const formData = new FormData();
+    formData.append('file', imageBlob, 'capture.png');
 
     // Begin upload
     scaningState.value = 'uploading';
